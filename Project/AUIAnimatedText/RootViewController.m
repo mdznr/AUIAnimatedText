@@ -77,7 +77,7 @@
     return YES;
 }
 
--(IBAction) animateTextColor
+- (IBAction)animateTextColor
 {
     static int colorIndex;
     
@@ -90,12 +90,13 @@
     }];
 }
 
--(IBAction) animateText
+- (IBAction)animateText
 {
     static int textIndex;
     
-    if (textIndex == textToAnimate.count)
+    if ( textIndex == textToAnimate.count ) {
         textIndex = 0;
+	}
     
     NSString *newText = [textToAnimate objectAtIndex:textIndex++];
     [UIView animateWithDuration:1.0 animations:^{
@@ -103,20 +104,21 @@
     }];
 }
 
--(IBAction) animateFont
+- (IBAction)animateFont
 {
     static int fontIndex;
     
-    if (fontIndex == fontsToAnimate.count)
+    if ( fontIndex == fontsToAnimate.count ) {
         fontIndex = 0;
+	}
     
     UIFont *newFont = [fontsToAnimate objectAtIndex:fontIndex++];
     [UIView animateWithDuration:1.0 animations:^{
-        self.animatableLabel.font = newFont;
+		self.animatableLabel.font = newFont;
     }];
 }
 
--(IBAction) animateSize
+- (IBAction)animateSize
 {
     static int sizeIndex;
     

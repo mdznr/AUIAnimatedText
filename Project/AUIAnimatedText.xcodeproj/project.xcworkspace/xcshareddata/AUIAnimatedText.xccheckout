@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>A7789C14-2AD0-4AB0-85A2-C1556AA4D242</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AUIAnimatedText</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>35E26E97-B98B-42C9-A9BA-8899B4F7E38C</key>
+		<string>https://github.com/mdznr/AUIAnimatedText.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Project/AUIAnimatedText.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>35E26E97-B98B-42C9-A9BA-8899B4F7E38C</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/mdznr/AUIAnimatedText.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>35E26E97-B98B-42C9-A9BA-8899B4F7E38C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>35E26E97-B98B-42C9-A9BA-8899B4F7E38C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>AUIAnimatedText</string>
+		</dict>
+	</array>
+</dict>
+</plist>
