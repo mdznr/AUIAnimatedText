@@ -32,7 +32,7 @@
 
 @interface AUIAnimatableLabel()
 
--(void) _initializeTextLayer;
+- (void)_initializeTextLayer;
 
 @end
 
@@ -42,64 +42,61 @@
 
 @synthesize textLayer, verticalTextAlignment;
 
--(id) init
+- (id)init
 {
     self = [super init];
-    if (self)
-    {
+    if (self) {
         [self _initializeTextLayer];
     }
     return self;
 }
 
--(id) initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (self)
-    {
+    if (self) {
         [self _initializeTextLayer];
     }
     return self;
 }
 
--(id) initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self)
-    {
+    if (self) {
         [self _initializeTextLayer];
     }
     return self;
 }
 
--(UIColor *)textColor
+- (UIColor *)textColor
 {
     return [UIColor colorWithCGColor:textLayer.foregroundColor];
 }
 
--(void) setTextColor:(UIColor *)textColor
+- (void)setTextColor:(UIColor *)textColor
 {
     textLayer.foregroundColor = textColor.CGColor;
     [self setNeedsDisplay];
 }
 
--(NSString *)text
+- (NSString *)text
 {
     return textLayer.string;
 }
 
--(void) setText:(NSString *)text
+- (void)setText:(NSString *)text
 {
     textLayer.string = text;
     [self setNeedsDisplay];
 }
 
--(UIFont *) font
+- (UIFont *)font
 {
     return [UIFont fontWithCTFont:textLayer.font];
 }
 
--(void) setFont:(UIFont *)font
+- (void)setFont:(UIFont *)font
 {
     CTFontRef fontRef = font.CTFont;
     textLayer.font = fontRef;
@@ -108,50 +105,51 @@
     [self setNeedsDisplay];
 }
 
--(void) setFrame:(CGRect)frame
+- (void)setFrame:(CGRect)frame
 {
     textLayer.frame = frame;
     [super setFrame:frame];
     [self setNeedsDisplay];
 }
 
--(UIColor *) shadowColor
+- (UIColor *)shadowColor
 {
     return [UIColor colorWithCGColor:textLayer.shadowColor];
 }
 
--(void) setShadowColor:(UIColor *)shadowColor
+- (void)setShadowColor:(UIColor *)shadowColor
 {
     textLayer.shadowColor = shadowColor.CGColor;
     [self setNeedsDisplay];
 }
 
--(CGSize) shadowOffset
+- (CGSize)shadowOffset
 {
     return textLayer.shadowOffset;
 }
 
--(void) setShadowOffset:(CGSize)shadowOffset
+- (void)setShadowOffset:(CGSize)shadowOffset
 {
     textLayer.shadowOffset = shadowOffset;
     [self setNeedsDisplay];
 }
 
--(NSTextAlignment) textAlignment
+- (NSTextAlignment)textAlignment
 {
     NSTextAlignment labelAlignment = NSTextAlignmentLeft;
     NSString *layerAlignmentMode = textLayer.alignmentMode;
-    if ([layerAlignmentMode isEqualToString:kCAAlignmentLeft])
+    if ( [layerAlignmentMode isEqualToString:kCAAlignmentLeft] ) {
         labelAlignment = NSTextAlignmentLeft;
-    else if ([layerAlignmentMode isEqualToString:kCAAlignmentRight])
+    } else if ( [layerAlignmentMode isEqualToString:kCAAlignmentRight] ) {
         labelAlignment = NSTextAlignmentRight;
-    else if ([layerAlignmentMode isEqualToString:kCAAlignmentCenter])
+    } else if ( [layerAlignmentMode isEqualToString:kCAAlignmentCenter] ) {
         labelAlignment = NSTextAlignmentCenter;
+	}
     
     return labelAlignment;
 }
 
--(void) setTextAlignment:(NSTextAlignment)textAlignment
+- (void)setTextAlignment:(NSTextAlignment)textAlignment
 {
     switch (textAlignment) {
         case NSTextAlignmentLeft:
@@ -170,12 +168,12 @@
     [self setNeedsDisplay];
 }
 
--(NSLineBreakMode) lineBreakMode
+- (NSLineBreakMode)lineBreakMode
 {
     return [super lineBreakMode];
 }
 
--(void) setLineBreakMode:(NSLineBreakMode)lineBreakMode
+- (void)setLineBreakMode:(NSLineBreakMode)lineBreakMode
 {
     switch (lineBreakMode) {
         case NSLineBreakByWordWrapping:
@@ -199,35 +197,34 @@
     [self setNeedsDisplay];
 }
 
--(void) setVerticalTextAlignment:(AUITextVerticalAlignment)newVerticalTextAlignment
+- (void)setVerticalTextAlignment:(AUITextVerticalAlignment)newVerticalTextAlignment
 {
     verticalTextAlignment = newVerticalTextAlignment;
     [self setNeedsLayout];
 }
 
--(void) layoutSubviews
+- (void)layoutSubviews
 {
     [super layoutSubviews];
     
-    if (self.adjustsFontSizeToFitWidth)
-    {
+    if ( self.adjustsFontSizeToFitWidth ) {
         // Calculate the new font size:
         CGFloat newFontSize;
-        float minimumFontSize;
-        if ([self respondsToSelector:@selector(minimumScaleFactor)]) {
-            minimumFontSize = self.minimumScaleFactor;
-        }
-        else {
-            minimumFontSize = self.minimumFontSize;
-        }
+		float minimumFontSize = self.minimumScaleFactor;
         [textLayer.string sizeWithFont:self.font minFontSize:minimumFontSize actualFontSize:&newFontSize forWidth:self.bounds.size.width lineBreakMode:self.lineBreakMode];
         self.font = [UIFont fontWithName:self.font.fontName size:newFontSize];
     }
     
-    // Resize the text so that the text will be vertically aligned according to the set alignment
-    CGSize stringSize = [self.text sizeWithFont:self.font
-                              constrainedToSize:self.bounds.size
-                                  lineBreakMode:self.lineBreakMode];
+    // Resize the text so that the text will be vertically aligned according to the set alignment	
+	NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+	[style setLineBreakMode:self.lineBreakMode];
+	NSDictionary *attributes = @{NSFontAttributeName: self.font,
+								 NSParagraphStyleAttributeName: style};
+	CGRect boundingRect = [self.text boundingRectWithSize:self.bounds.size
+												  options:0
+											   attributes:attributes
+												  context:nil];
+	CGSize stringSize = boundingRect.size;
     
     CGRect newLayerFrame = self.layer.bounds;
     newLayerFrame.size.height = stringSize.height;
@@ -253,7 +250,7 @@
 
 #pragma mark - private methods
 
--(void) _initializeTextLayer
+- (void)_initializeTextLayer
 {
     textLayer = [[CATextLayer alloc] init];
     [textLayer setFrame:self.bounds];
